@@ -1,6 +1,6 @@
 extends Node2D
 
-@onready var data := preload("res://scenes/TestScene/Data.tscn")
+@onready var data := preload("res://scenes/Sprites/Data.tscn")
 @onready var action_window: Area2D = $FullWindow/Center/ActionWindow
 
 var timer: Timer

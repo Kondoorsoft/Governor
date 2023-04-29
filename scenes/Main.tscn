@@ -1,13 +1,12 @@
-[gd_scene load_steps=3 format=3 uid="uid://budvehgw33nyy"]
+[gd_scene load_steps=3 format=3 uid="uid://7dul0mt7jcc2"]
 
-[ext_resource type="Script" path="res://scenes/TestScene/Window.gd" id="1_230qn"]
+[ext_resource type="Script" path="res://scenes/Main.gd" id="1_b2ka4"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_57nro"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bfjce"]
 size = Vector2(40, 45)
 
-[node name="TestScene" type="Node2D"]
-position = Vector2(2.08165e-12, 2.08165e-12)
-script = ExtResource("1_230qn")
+[node name="Main" type="Node2D"]
+script = ExtResource("1_b2ka4")
 
 [node name="FullWindow" type="Control" parent="."]
 layout_mode = 3
@@ -55,4 +54,4 @@ color = Color(0.454902, 1, 0.87451, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="FullWindow/Center/ActionWindow"]
 position = Vector2(20, 22.5)
-shape = SubResource("RectangleShape2D_57nro")
+shape = SubResource("RectangleShape2D_bfjce")
