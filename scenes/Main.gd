@@ -4,6 +4,15 @@ extends Node2D
 @onready var action_window: Area2D = $FullWindow/Center/ActionWindow
 @onready var background: Sprite2D = $FullWindow/Background
 
+@onready var ne_button:= $FullWindow/NEButton
+@onready var se_button:= $FullWindow/SEButton
+@onready var sw_button:= $FullWindow/SWButton
+@onready var nw_button:= $FullWindow/NWButton
+
+@onready var n_button := $FullWindow/NButton
+@onready var s_button := $FullWindow/SButton
+@onready var e_button := $FullWindow/EButton
+
 var timer: Timer
 var spawn_point: Vector2
 var center_screen: Vector2
@@ -22,6 +31,14 @@ func _ready():
 	timer.connect('timeout', Callable(self, 'spawn_data'))
 	add_child(timer)
 	timer.start()
+	
+	if Globals.is_keyboard == true:
+		ne_button.frame = 46
+		nw_button.frame = 45
+		se_button.frame = 47
+		sw_button.frame = 44 
+
+
 
 func _process(_delta):
 	var collisions := action_window.get_overlapping_bodies().filter(unprocessed)
@@ -30,7 +47,6 @@ func _process(_delta):
 		next_sprite = collisions[0]
 
 	if next_sprite != null:
-		print(collisions)
 		if Input.is_action_just_pressed('northwest'):
 			var tween := get_tree().create_tween()
 			tween.set_ease(Tween.EASE_IN_OUT)
