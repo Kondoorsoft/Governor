@@ -2,18 +2,24 @@
 
 [ext_resource type="Script" path="res://scenes/TestScene/Window.gd" id="1_230qn"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_n0yrc"]
-radius = 42.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_57nro"]
+size = Vector2(40, 45)
 
-[node name="TestScene" type="Control"]
+[node name="TestScene" type="Node2D"]
+position = Vector2(2.08165e-12, 2.08165e-12)
+script = ExtResource("1_230qn")
+
+[node name="FullWindow" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_right = 400.0
+offset_bottom = 225.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Background" type="ColorRect" parent="."]
+[node name="Background" type="ColorRect" parent="FullWindow"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -22,20 +28,31 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.415686, 0.415686, 0.415686, 1)
 
-[node name="ColorRect" type="ColorRect" parent="."]
-layout_mode = 0
-offset_left = 161.0
-offset_top = 64.0
-offset_right = 245.0
-offset_bottom = 148.0
+[node name="Center" type="Control" parent="FullWindow"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -22.5
+offset_right = 20.0
+offset_bottom = 22.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="ColorRect" parent="FullWindow/Center"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 color = Color(0.454902, 1, 0.87451, 1)
 
-[node name="Window" type="Node2D" parent="."]
-position = Vector2(2.08165e-12, 2.08165e-12)
-script = ExtResource("1_230qn")
+[node name="ActionWindow" type="Area2D" parent="FullWindow/Center"]
 
-[node name="ActionWindow" type="Area2D" parent="Window"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Window/ActionWindow"]
-position = Vector2(203, 106)
-shape = SubResource("CircleShape2D_n0yrc")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FullWindow/Center/ActionWindow"]
+position = Vector2(20, 22.5)
+shape = SubResource("RectangleShape2D_57nro")
