@@ -6,12 +6,15 @@ extends Node2D
 
 var timer: Timer
 var spawn_point: Vector2
+var center_screen: Vector2
+var tween_speed := 0.5
 
 func _ready():
 
 	action_window.connect('body_exited', Callable(self, 'data_missed'))
 
 	spawn_point = Vector2(20, get_viewport_rect().size.y / 2)
+	center_screen = get_viewport_rect().get_center()
 
 	timer = Timer.new()
 	timer.set_wait_time(1)
@@ -22,31 +25,48 @@ func _ready():
 
 func _process(_delta):
 	var collisions := action_window.get_overlapping_bodies().filter(unprocessed)
-	var next_data: CharacterBody2D = null
+	var next_sprite: CharacterBody2D = null
 	if len(collisions) > 0:
-		next_data = collisions[0]
+		next_sprite = collisions[0]
 
-	if next_data != null:
+	if next_sprite != null:
+		print(collisions)
 		if Input.is_action_just_pressed('northwest'):
-			Globals.set_velocity(next_data, Globals.VELOCITIES.northwest)
+			var tween := get_tree().create_tween()
+			tween.set_ease(Tween.EASE_IN_OUT)
+			tween.tween_property(next_sprite, 'position', center_screen, tween_speed)
+			tween.tween_property(next_sprite, 'current_velocity', Vector2(0, 0), tween_speed) 
+			Globals.set_velocity(next_sprite, Globals.VELOCITIES.northwest)
 			background.frame = 4
 		elif Input.is_action_just_pressed('north'):
-			Globals.set_velocity(next_data, Globals.VELOCITIES.north)
+			var tween := get_tree().create_tween()
+			tween.set_ease(Tween.EASE_IN_OUT)
+			tween.tween_property(next_sprite, 'current_velocity', Vector2(0, 0), tween_speed) 
+			tween.tween_property(next_sprite, 'position', center_screen, tween_speed)
+			Globals.set_velocity(next_sprite, Globals.VELOCITIES.north)
 			background.frame = 3
 		elif Input.is_action_just_pressed('northeast'):
-			Globals.set_velocity(next_data, Globals.VELOCITIES.northeast)
+			var tween := get_tree().create_tween()
+			tween.tween_property(next_sprite, 'position', center_screen, tween_speed)
+			Globals.set_velocity(next_sprite, Globals.VELOCITIES.northeast)
 			background.frame = 2
 		elif Input.is_action_just_pressed('east'):
-			Globals.set_velocity(next_data, Globals.VELOCITIES.east)
+			Globals.set_velocity(next_sprite, Globals.VELOCITIES.east)
 			background.frame = 1
 		elif Input.is_action_just_pressed('southeast'):
-			Globals.set_velocity(next_data, Globals.VELOCITIES.southeast)
+			var tween := get_tree().create_tween()
+			tween.tween_property(next_sprite, 'position', center_screen, tween_speed)
+			Globals.set_velocity(next_sprite, Globals.VELOCITIES.southeast)
 			background.frame = 0
 		elif Input.is_action_just_pressed('south'):
-			Globals.set_velocity(next_data, Globals.VELOCITIES.south)
+			var tween := get_tree().create_tween()
+			tween.tween_property(next_sprite, 'position', center_screen, tween_speed)
+			Globals.set_velocity(next_sprite, Globals.VELOCITIES.south)
 			background.frame = 6
 		elif Input.is_action_just_pressed('southwest'):
-			Globals.set_velocity(next_data, Globals.VELOCITIES.southwest)
+			var tween := get_tree().create_tween()
+			tween.tween_property(next_sprite, 'position', center_screen, tween_speed)
+			Globals.set_velocity(next_sprite, Globals.VELOCITIES.southwest)
 			background.frame = 5
 
 func unprocessed(body: Node2D):
@@ -56,9 +76,13 @@ func spawn_data():
 	var sprite = data.instantiate()
 	sprite.position = spawn_point
 	add_child(sprite)
-	timer.set_wait_time(0.5)
+	timer.set_wait_time(1)
 	timer.start()
 
 func data_missed(body: Node2D):
-	body.set('current_velocity', Globals.current_velocity)
+	var previous_velocity = Globals.current_velocity
+	# if previous_velocity != Globals.VELOCITIES.east:
+	# 	var tween := get_tree().create_tween()
+	# 	tween.tween_property(body, 'position', center_screen, tween_speed)
+	body.set('current_velocity', previous_velocity)
 	body.set('processed', true)

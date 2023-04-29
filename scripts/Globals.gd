@@ -1,6 +1,6 @@
 extends Node
 
-const DEFAULT_SPEED := 200
+const DEFAULT_SPEED := 100
 const VELOCITIES := {
     "northwest": Vector2(DEFAULT_SPEED * -1, DEFAULT_SPEED * -1),
     "north": Vector2(0, DEFAULT_SPEED * -1),
