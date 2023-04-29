@@ -1,0 +1,96 @@
+[gd_scene load_steps=3 format=3 uid="uid://by7u22v3atlfx"]
+
+[ext_resource type="FontFile" uid="uid://ce776xo4pqb10" path="res://assets/fonts/EGB.tres" id="1_10mym"]
+[ext_resource type="Script" path="res://scenes/Opening.gd" id="1_eob0j"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_eob0j")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Label2" type="Label" parent="."]
+texture_filter = 1
+texture_repeat = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -154.0
+offset_top = -97.5
+offset_right = 154.0
+offset_bottom = 97.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.772549, 0.105882, 0, 1)
+theme_override_fonts/font = ExtResource("1_10mym")
+theme_override_font_sizes/font_size = 8
+text = "
+
+THERE IS A COMPUTER. YOU ARE ITS BRAIN.
+
+PRESS THE CORRECT KEYS TO SEND FILES WHERE 
+THEY NEED TO GO.
+
+BUGS AND VIRUSES GO IN THE TRASH.
+
+FAIL TO PERFORM, AND YOU
+WILL BE REPLACED.
+
+
+Press start or enter to begin.
+
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label" type="Label" parent="."]
+texture_filter = 1
+texture_repeat = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -104.0
+offset_top = -45.5
+offset_right = 104.0
+offset_bottom = 45.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("1_10mym")
+theme_override_font_sizes/font_size = 8
+text = "
+
+THERE IS A COMPUTER. YOU ARE ITS BRAIN.
+
+PRESS THE CORRECT KEYS TO SEND FILES WHERE 
+THEY NEED TO GO.
+
+BUGS AND VIRUSES GO IN THE TRASH.
+
+
+
+
+
+Press start or enter to begin.
+
+"
+horizontal_alignment = 1
+vertical_alignment = 1

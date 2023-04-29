@@ -62,7 +62,7 @@ vframes = 3
 frame = 10
 
 [node name="Background" type="Sprite2D" parent="."]
-position = Vector2(201, -59)
+position = Vector2(200, -59)
 texture = ExtResource("1_drntd")
 hframes = 4
 vframes = 3
