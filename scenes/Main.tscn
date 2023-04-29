@@ -1,9 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://7dul0mt7jcc2"]
+[gd_scene load_steps=4 format=3 uid="uid://7dul0mt7jcc2"]
 
 [ext_resource type="Script" path="res://scenes/Main.gd" id="1_b2ka4"]
+[ext_resource type="Texture2D" uid="uid://dejdxf84pxtx1" path="res://assets/images/BGSpriteSheet.png" id="2_bqarr"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bfjce"]
-size = Vector2(40, 45)
+size = Vector2(32, 37)
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_b2ka4")
@@ -18,14 +19,12 @@ offset_bottom = 225.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Background" type="ColorRect" parent="FullWindow"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.415686, 0.415686, 0.415686, 1)
+[node name="Background" type="Sprite2D" parent="FullWindow"]
+position = Vector2(200, 112.5)
+texture = ExtResource("2_bqarr")
+hframes = 4
+vframes = 3
+frame = 1
 
 [node name="Center" type="Control" parent="FullWindow"]
 layout_mode = 1
@@ -40,15 +39,6 @@ offset_right = 20.0
 offset_bottom = 22.5
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="Background" type="ColorRect" parent="FullWindow/Center"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.454902, 1, 0.87451, 1)
 
 [node name="ActionWindow" type="Area2D" parent="FullWindow/Center"]
 
