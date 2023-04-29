@@ -11,10 +11,21 @@ config_version=5
 [application]
 
 config/name="Governor"
+run/main_scene="res://scenes/root.tscn"
 config/features=PackedStringArray("4.0", "GL Compatibility")
+run/max_fps=160
 config/icon="res://icon.svg"
+
+[display]
+
+window/size/viewport_width=400
+window/size/viewport_height=225
+window/size/window_width_override=1920
+window/size/window_height_override=1080
+window/stretch/mode="viewport"
 
 [rendering]
 
+textures/canvas_textures/default_texture_filter=3
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
