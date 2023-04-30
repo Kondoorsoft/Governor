@@ -13,6 +13,11 @@ extends Node2D
 @onready var s_button := $FullWindow/SButton
 @onready var e_button := $FullWindow/EButton
 
+@onready var memory = $Memory
+@onready var score = $Score
+
+
+
 var dead := false
 var dead_sound := false
 var timer: Timer
@@ -28,7 +33,9 @@ func _ready():
 	audio_stream_player_dead.connect('finished', Callable(self, 'audio_stream_player_dead_finished'))
 
 	background.frame = 8
-
+	score.text ='0'
+	
+	
 	spawn_point = Vector2(-20, get_viewport_rect().size.y / 2)
 	center_screen = get_viewport_rect().get_center()
 
@@ -69,12 +76,20 @@ func _process(_delta):
 		elif Input.is_action_just_pressed('southwest'):
 			instruct_sprites(5, Globals.DIRECTIONS.SOUTHWEST)
 
+func _physics_process(_delta: float) -> void:
+	if memory.value > 0:
+		memory.value = memory.value - .03
+
+
+
+
 func instruct_sprites(bg_frame: int, new_direction: Globals.DIRECTIONS):
 	background.frame = bg_frame
 	Globals.lane_direction = new_direction
 	if !initial_sprite_instructed:
 		initial_sprite_instructed = true
 		start_game()
+		$FullWindow/ColorRect.visible = false
 
 func spawn_sprite():
 	var new_sprite = Sprite.instantiate()
@@ -87,8 +102,10 @@ func spawn_sprite():
 
 func sprite_at_cpu(sprite: Node2D):
 	sprite.set('waiting_instruction', true)
+	
 	if !initial_sprite_at_cpu:
 		initial_sprite_at_cpu = true
+		$FullWindow/ColorRect.visible = true
 
 func start_game():
 	timer = Timer.new()
