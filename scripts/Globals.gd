@@ -55,3 +55,10 @@ const SPRITE_DESTINATIONS = {
 	#50: "W"	
 }
 var available_sprite_indexes = SPRITE_DESTINATIONS.keys()
+
+
+func _process(delta):
+	if Input.is_action_just_pressed('quit'):
+		get_tree().quit()
+
+

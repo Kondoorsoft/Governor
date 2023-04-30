@@ -12,6 +12,8 @@ extends Node2D
 @onready var s_button := $FullWindow/SButton
 @onready var e_button := $FullWindow/EButton
 
+var dead := false
+var dead_sound := false
 var timer: Timer
 var spawn_point: Vector2
 var center_screen: Vector2
@@ -36,7 +38,20 @@ func _ready():
 		sw_button.frame = 44 
 
 func _process(_delta):
-
+	
+	if Input.is_action_just_pressed('suicide'):
+		dead = true
+	
+	
+	if dead == false && $AudioStreamPlayer.playing == false:
+		$AudioStreamPlayer.play()
+	
+	if dead && $AudioStreamPlayerDead.playing == false:
+		$AudioStreamPlayer.stop()
+		$AudioStreamPlayerDead.play()
+		dead_sound = true
+	
+	
 	if initial_sprite_at_cpu:
 		if Input.is_action_just_pressed('northwest'):
 			instruct_sprites(4, Globals.DIRECTIONS.northwest)
@@ -82,3 +97,8 @@ func start_game():
 	add_child(timer)
 	timer.start()
 
+
+
+func _on_audio_stream_player_dead_finished() -> void:
+	if dead_sound == true:
+		get_tree().change_scene_to_file('res://scenes/Game Over.tscn')
