@@ -46,7 +46,7 @@ const SPRITE_DESTINATIONS = {
 	34: "N",
 	35: "S",
 	36: "E",
-	#37: "W",6
+	#37: "W",
 	38: "E",
 	#39: "W",
 	40: "N",
