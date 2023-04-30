@@ -95,5 +95,3 @@ autoplay = true
 
 [node name="AudioStreamPlayerDead" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_fl2f2")
-
-[connection signal="finished" from="AudioStreamPlayerDead" to="." method="_on_audio_stream_player_dead_finished"]

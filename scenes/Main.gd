@@ -2,6 +2,7 @@ extends Node2D
 
 @onready var Sprite := preload("res://scenes/Sprites/Data.tscn")
 @onready var background: Sprite2D = $FullWindow/Background
+@onready var audio_stream_player_dead: AudioStreamPlayer = $AudioStreamPlayerDead
 
 @onready var ne_button:= $FullWindow/NEButton
 @onready var se_button:= $FullWindow/SEButton
@@ -23,6 +24,8 @@ var initial_sprite_at_cpu := false
 var initial_sprite_instructed := false
 
 func _ready():
+
+	audio_stream_player_dead.connect('finished', Callable(self, 'audio_stream_player_dead_finished'))
 
 	background.frame = 8
 
@@ -79,7 +82,7 @@ func spawn_sprite():
 	add_child(new_sprite)
 	var tween = create_tween()
 	tween.connect('finished', Callable(self, 'sprite_at_cpu').bind(new_sprite))
-	tween.tween_property(new_sprite, 'position', center_screen, Globals.DEFAULT_ENTRANCE_SPEED).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
+	tween.tween_property(new_sprite, 'position', center_screen, Globals.sprite_entrance_time).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
 	tween.play()
 
 func sprite_at_cpu(sprite: Node2D):
@@ -89,12 +92,12 @@ func sprite_at_cpu(sprite: Node2D):
 
 func start_game():
 	timer = Timer.new()
-	timer.set_wait_time(Globals.DEFAULT_RESPAWN_TIME)
+	timer.set_wait_time(Globals.sprite_respawn_time)
 	timer.set_one_shot(false)
 	timer.connect('timeout', Callable(self, 'spawn_sprite'))
 	add_child(timer)
 	timer.start()
 
-func _on_audio_stream_player_dead_finished() -> void:
+func audio_stream_player_dead_finished() -> void:
 	if dead_sound:
 		get_tree().change_scene_to_file('res://scenes/Game Over.tscn')
