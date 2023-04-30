@@ -64,13 +64,17 @@ const DEFAULT_ENTRANCE_TIME := 3.0
 const DEFAULT_RESPAWN_TIME := 3.0
 
 var lane_direction: Globals.DIRECTIONS = DIRECTIONS.UNSET
-var is_keyboard: bool = false
 var available_sprite_indexes: Array[int] = []
+
+var is_keyboard: bool = false
+
 var sprite_entrance_time := DEFAULT_ENTRANCE_TIME
+var sprite_minimum_entrance_time := 1.0
 var sprite_respawn_time := DEFAULT_RESPAWN_TIME
-var final_score := "0"
-var timer_name := "GlobalTimer"
 var timer_interval := 5.0
+var timer_name := "GlobalTimer"
+
+var final_score := "0"
 
 func _ready() -> void:
 	var timer := Timer.new()
@@ -95,7 +99,8 @@ func get_lane(frame_index: int) -> Lane:
 	return null
 
 func increase_difficulty():
-	sprite_entrance_time *= 0.9
+	if sprite_entrance_time >= sprite_minimum_entrance_time:
+		sprite_entrance_time *= 0.9
 	sprite_respawn_time *= 0.9
 
 func start_game():
