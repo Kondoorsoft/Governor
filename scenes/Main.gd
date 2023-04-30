@@ -66,7 +66,7 @@ func spawn_sprite():
 	add_child(new_sprite)
 	var tween = create_tween()
 	tween.connect('finished', Callable(self, 'sprite_at_cpu').bind(new_sprite))
-	tween.tween_property(new_sprite, 'position', center_screen, 1).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
+	tween.tween_property(new_sprite, 'position', center_screen, Globals.DEFAULT_ENTRANCE_SPEED).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
 	tween.play()
 
 func sprite_at_cpu(sprite: Node2D):
@@ -76,7 +76,7 @@ func sprite_at_cpu(sprite: Node2D):
 
 func start_game():
 	timer = Timer.new()
-	timer.set_wait_time(1)
+	timer.set_wait_time(Globals.DEFAULT_RESPAWN_TIME)
 	timer.set_one_shot(false)
 	timer.connect('timeout', Callable(self, 'spawn_sprite'))
 	add_child(timer)

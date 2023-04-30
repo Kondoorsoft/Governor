@@ -3,15 +3,17 @@ extends Node
 var lane_direction: Vector2 = Vector2.ZERO
 var is_keyboard: bool = false
 
-const DEFAULT_SPEED := 100
+const DEFAULT_ENTRANCE_SPEED := 3
+const DEFAULT_RESPAWN_TIME := 3
+const DEFAULT_EXIT_SPEED := 100
 const DIRECTIONS := {
-	"northwest": Vector2(DEFAULT_SPEED * -1, DEFAULT_SPEED * -1),
-	"north": Vector2(0, DEFAULT_SPEED * -1),
-	"northeast": Vector2(DEFAULT_SPEED, DEFAULT_SPEED * -1),
-	"east": Vector2(DEFAULT_SPEED, 0),
-	"southeast": Vector2(DEFAULT_SPEED, DEFAULT_SPEED),
-	"south": Vector2(0, DEFAULT_SPEED),
-	"southwest": Vector2(DEFAULT_SPEED * -1, DEFAULT_SPEED),
+	"northwest": Vector2(DEFAULT_EXIT_SPEED * -1, DEFAULT_EXIT_SPEED * -1),
+	"north": Vector2(0, DEFAULT_EXIT_SPEED * -1),
+	"northeast": Vector2(DEFAULT_EXIT_SPEED, DEFAULT_EXIT_SPEED * -1),
+	"east": Vector2(DEFAULT_EXIT_SPEED, 0),
+	"southeast": Vector2(DEFAULT_EXIT_SPEED, DEFAULT_EXIT_SPEED),
+	"south": Vector2(0, DEFAULT_EXIT_SPEED),
+	"southwest": Vector2(DEFAULT_EXIT_SPEED * -1, DEFAULT_EXIT_SPEED),
 }
 
 ### Sprite Column Starting Indexes
@@ -44,12 +46,12 @@ const SPRITE_DESTINATIONS = {
 	34: "N",
 	35: "S",
 	36: "E",
-	37: "W",
+	#37: "W",6
 	38: "E",
-	39: "W",
+	#39: "W",
 	40: "N",
 	48: "S",
 	49: "E",
-	50: "W"	
+	#50: "W"	
 }
 var available_sprite_indexes = SPRITE_DESTINATIONS.keys()
