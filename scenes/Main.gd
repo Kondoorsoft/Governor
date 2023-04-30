@@ -49,11 +49,16 @@ func _ready():
 	spawn_timer.connect('timeout', Callable(self, 'spawn_sprite'))
 	spawn_sprite()
 	
-	if Globals.is_keyboard == true:
+	if Globals.is_keyboard:
 		ne_button.frame = 46
 		nw_button.frame = 45
 		se_button.frame = 47
 		sw_button.frame = 44 
+	else:
+		ne_button.frame = 18
+		nw_button.frame = 17
+		se_button.frame = 19
+		sw_button.frame = 16
 
 func _process(_delta):
 	
