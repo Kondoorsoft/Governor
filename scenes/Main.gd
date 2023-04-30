@@ -42,8 +42,7 @@ func _process(_delta):
 	if Input.is_action_just_pressed('suicide'):
 		dead = true
 	
-	
-	if dead == false && $AudioStreamPlayer.playing == false:
+	if !dead && $AudioStreamPlayer.playing == false:
 		$AudioStreamPlayer.play()
 	
 	if dead && $AudioStreamPlayerDead.playing == false:
@@ -51,26 +50,25 @@ func _process(_delta):
 		$AudioStreamPlayerDead.play()
 		dead_sound = true
 	
-	
 	if initial_sprite_at_cpu:
 		if Input.is_action_just_pressed('northwest'):
-			instruct_sprites(4, Globals.DIRECTIONS.northwest)
+			instruct_sprites(4, Globals.DIRECTIONS.NORTHWEST)
 		elif Input.is_action_just_pressed('north'):
-			instruct_sprites(3, Globals.DIRECTIONS.north)
+			instruct_sprites(3, Globals.DIRECTIONS.NORTH)
 		elif Input.is_action_just_pressed('northeast'):
-			instruct_sprites(2, Globals.DIRECTIONS.northeast)
+			instruct_sprites(2, Globals.DIRECTIONS.NORTHEAST)
 		elif Input.is_action_just_pressed('east'):
-			instruct_sprites(1, Globals.DIRECTIONS.east)
+			instruct_sprites(1, Globals.DIRECTIONS.EAST)
 		elif Input.is_action_just_pressed('southeast'):
-			instruct_sprites(0, Globals.DIRECTIONS.southeast)
+			instruct_sprites(0, Globals.DIRECTIONS.SOUTHEAST)
 		elif Input.is_action_just_pressed('south'):
-			instruct_sprites(6, Globals.DIRECTIONS.south)
+			instruct_sprites(6, Globals.DIRECTIONS.SOUTH)
 		elif Input.is_action_just_pressed('southwest'):
-			instruct_sprites(5, Globals.DIRECTIONS.southwest)
+			instruct_sprites(5, Globals.DIRECTIONS.SOUTHWEST)
 
-func instruct_sprites(bg_frame: int, direction: Vector2):
+func instruct_sprites(bg_frame: int, new_direction: Globals.DIRECTIONS):
 	background.frame = bg_frame
-	Globals.lane_direction = direction
+	Globals.lane_direction = new_direction
 	if !initial_sprite_instructed:
 		initial_sprite_instructed = true
 		start_game()
@@ -97,8 +95,6 @@ func start_game():
 	add_child(timer)
 	timer.start()
 
-
-
 func _on_audio_stream_player_dead_finished() -> void:
-	if dead_sound == true:
+	if dead_sound:
 		get_tree().change_scene_to_file('res://scenes/Game Over.tscn')
