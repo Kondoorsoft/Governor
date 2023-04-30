@@ -1,11 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://7dul0mt7jcc2"]
+[gd_scene load_steps=4 format=3 uid="uid://7dul0mt7jcc2"]
 
 [ext_resource type="Script" path="res://scenes/Main.gd" id="1_b2ka4"]
 [ext_resource type="Texture2D" uid="uid://dejdxf84pxtx1" path="res://assets/images/BGSpriteSheet.png" id="2_bqarr"]
 [ext_resource type="Texture2D" uid="uid://d3c7xkera0uxg" path="res://assets/SpriteSheet.png" id="3_n1c26"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_bfjce"]
-size = Vector2(32, 37)
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_b2ka4")
@@ -41,42 +38,36 @@ offset_bottom = 22.5
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ActionWindow" type="Area2D" parent="FullWindow/Center"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="FullWindow/Center/ActionWindow"]
-position = Vector2(20, 22.5)
-shape = SubResource("RectangleShape2D_bfjce")
-
 [node name="NWButton" type="Sprite2D" parent="FullWindow"]
-position = Vector2(96, 8)
+position = Vector2(98, 8)
 texture = ExtResource("3_n1c26")
 hframes = 8
 vframes = 8
 frame = 17
 
 [node name="NEButton" type="Sprite2D" parent="FullWindow"]
-position = Vector2(304, 8)
+position = Vector2(302, 8)
 texture = ExtResource("3_n1c26")
 hframes = 8
 vframes = 8
 frame = 18
 
 [node name="SEButton" type="Sprite2D" parent="FullWindow"]
-position = Vector2(304, 216)
+position = Vector2(304, 217)
 texture = ExtResource("3_n1c26")
 hframes = 8
 vframes = 8
 frame = 19
 
 [node name="SWButton" type="Sprite2D" parent="FullWindow"]
-position = Vector2(96, 216)
+position = Vector2(96, 217)
 texture = ExtResource("3_n1c26")
 hframes = 8
 vframes = 8
 frame = 16
 
 [node name="SButton" type="Sprite2D" parent="FullWindow"]
-position = Vector2(200, 216)
+position = Vector2(200, 217)
 texture = ExtResource("3_n1c26")
 hframes = 8
 vframes = 8
@@ -90,7 +81,7 @@ vframes = 8
 frame = 20
 
 [node name="EButton" type="Sprite2D" parent="FullWindow"]
-position = Vector2(392, 112)
+position = Vector2(392, 113)
 texture = ExtResource("3_n1c26")
 hframes = 8
 vframes = 8

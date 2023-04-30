@@ -1,7 +1,10 @@
 extends Node
 
+var lane_direction: Vector2 = Vector2.ZERO
+var is_keyboard: bool = false
+
 const DEFAULT_SPEED := 100
-const VELOCITIES := {
+const DIRECTIONS := {
 	"northwest": Vector2(DEFAULT_SPEED * -1, DEFAULT_SPEED * -1),
 	"north": Vector2(0, DEFAULT_SPEED * -1),
 	"northeast": Vector2(DEFAULT_SPEED, DEFAULT_SPEED * -1),
@@ -10,14 +13,43 @@ const VELOCITIES := {
 	"south": Vector2(0, DEFAULT_SPEED),
 	"southwest": Vector2(DEFAULT_SPEED * -1, DEFAULT_SPEED),
 }
-const INITIAL_VELOCITY := VELOCITIES.east
 
-var is_keyboard: bool = false
+### Sprite Column Starting Indexes
+# 0
+# 8
+# 16
+# 24
+# 32
+# 40
+# 48
 
-var spawned: Array[int] = []
-var current_velocity: Vector2 = VELOCITIES.south
-
-func set_velocity(body: Node2D, new_velocity: Vector2):
-	body.set('current_velocity', new_velocity)
-	body.set('processed', true)
-	current_velocity = new_velocity
+const SPRITE_DESTINATIONS = {
+	#DIAGS
+	2: "SW",
+	3: "SE",
+	4: "NE",
+	5: "NW",
+	9: "SW",
+	10: "SE",
+	11: "NE",
+	12: "NW",
+	29: "SW",
+	30: "NW",
+	31: "SE",
+	33: "NE",
+	
+	#STRAIGHTS
+	14: "N",
+	32: "S",
+	34: "N",
+	35: "S",
+	36: "E",
+	37: "W",
+	38: "E",
+	39: "W",
+	40: "N",
+	48: "S",
+	49: "E",
+	50: "W"	
+}
+var available_sprite_indexes = SPRITE_DESTINATIONS.keys()

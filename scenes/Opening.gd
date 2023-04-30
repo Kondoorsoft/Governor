@@ -1,5 +1,7 @@
 extends Control
 
+@onready var Scene = preload('res://scenes/Main.tscn')
+
 @onready var ne_button:= $Label/NEButton
 @onready var se_button:= $Label/SEButton
 @onready var sw_button:= $Label/SWButton
@@ -30,17 +32,11 @@ func _ready() -> void:
 		se_button.frame = 47
 		sw_button.frame = 44 
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta: float) -> void:
-#	pass
-#func _physics_process(delta: float) -> void:
-#	pass
 func _input(event):
-		if can_continue && Input.is_action_just_pressed('ui_accept'):
-			if event is InputEventJoypadButton:
-				Globals.is_keyboard = false
-			else:
-				Globals.is_keyboard = true
-			get_tree().change_scene_to_file('res://scenes/Main.tscn')
+	if can_continue && Input.is_action_just_pressed('ui_accept'):
+		if event is InputEventJoypadButton:
+			Globals.is_keyboard = false
+		else:
+			Globals.is_keyboard = true
+		get_tree().change_scene_to_packed(Scene)
 			

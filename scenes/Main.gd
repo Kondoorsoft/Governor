@@ -1,7 +1,6 @@
 extends Node2D
 
-@onready var data := preload("res://scenes/Sprites/Data.tscn")
-@onready var action_window: Area2D = $FullWindow/Center/ActionWindow
+@onready var Sprite := preload("res://scenes/Sprites/Data.tscn")
 @onready var background: Sprite2D = $FullWindow/Background
 
 @onready var ne_button:= $FullWindow/NEButton
@@ -17,20 +16,17 @@ var timer: Timer
 var spawn_point: Vector2
 var center_screen: Vector2
 var tween_speed := 0.5
+var current_sprite: CharacterBody2D = null
+var initial_sprite_instructed := false
 
 func _ready():
 
-	action_window.connect('body_exited', Callable(self, 'data_missed'))
+	background.frame = 8
 
-	spawn_point = Vector2(20, get_viewport_rect().size.y / 2)
+	spawn_point = Vector2(-20, get_viewport_rect().size.y / 2)
 	center_screen = get_viewport_rect().get_center()
 
-	timer = Timer.new()
-	timer.set_wait_time(1)
-	timer.set_one_shot(false)
-	timer.connect('timeout', Callable(self, 'spawn_data'))
-	add_child(timer)
-	timer.start()
+	spawn_sprite()
 	
 	if Globals.is_keyboard == true:
 		ne_button.frame = 46
@@ -38,67 +34,48 @@ func _ready():
 		se_button.frame = 47
 		sw_button.frame = 44 
 
-
-
 func _process(_delta):
-	var collisions := action_window.get_overlapping_bodies().filter(unprocessed)
-	var next_sprite: CharacterBody2D = null
-	if len(collisions) > 0:
-		next_sprite = collisions[0]
 
-	if next_sprite != null:
+	if initial_sprite_instructed:
 		if Input.is_action_just_pressed('northwest'):
-			var tween := get_tree().create_tween()
-			tween.set_ease(Tween.EASE_IN_OUT)
-			tween.tween_property(next_sprite, 'position', center_screen, tween_speed)
-			tween.tween_property(next_sprite, 'current_velocity', Vector2(0, 0), tween_speed) 
-			Globals.set_velocity(next_sprite, Globals.VELOCITIES.northwest)
-			background.frame = 4
+			instruct_sprites(4, Globals.DIRECTIONS.northwest)
 		elif Input.is_action_just_pressed('north'):
-			var tween := get_tree().create_tween()
-			tween.set_ease(Tween.EASE_IN_OUT)
-			tween.tween_property(next_sprite, 'current_velocity', Vector2(0, 0), tween_speed) 
-			tween.tween_property(next_sprite, 'position', center_screen, tween_speed)
-			Globals.set_velocity(next_sprite, Globals.VELOCITIES.north)
-			background.frame = 3
+			instruct_sprites(3, Globals.DIRECTIONS.north)
 		elif Input.is_action_just_pressed('northeast'):
-			var tween := get_tree().create_tween()
-			tween.tween_property(next_sprite, 'position', center_screen, tween_speed)
-			Globals.set_velocity(next_sprite, Globals.VELOCITIES.northeast)
-			background.frame = 2
+			instruct_sprites(2, Globals.DIRECTIONS.northeast)
 		elif Input.is_action_just_pressed('east'):
-			Globals.set_velocity(next_sprite, Globals.VELOCITIES.east)
-			background.frame = 1
+			instruct_sprites(1, Globals.DIRECTIONS.east)
 		elif Input.is_action_just_pressed('southeast'):
-			var tween := get_tree().create_tween()
-			tween.tween_property(next_sprite, 'position', center_screen, tween_speed)
-			Globals.set_velocity(next_sprite, Globals.VELOCITIES.southeast)
-			background.frame = 0
+			instruct_sprites(0, Globals.DIRECTIONS.southeast)
 		elif Input.is_action_just_pressed('south'):
-			var tween := get_tree().create_tween()
-			tween.tween_property(next_sprite, 'position', center_screen, tween_speed)
-			Globals.set_velocity(next_sprite, Globals.VELOCITIES.south)
-			background.frame = 6
+			instruct_sprites(6, Globals.DIRECTIONS.south)
 		elif Input.is_action_just_pressed('southwest'):
-			var tween := get_tree().create_tween()
-			tween.tween_property(next_sprite, 'position', center_screen, tween_speed)
-			Globals.set_velocity(next_sprite, Globals.VELOCITIES.southwest)
-			background.frame = 5
+			instruct_sprites(5, Globals.DIRECTIONS.southwest)
 
-func unprocessed(body: Node2D):
-	return body.get('processed') == false
-	
-func spawn_data():
-	var sprite = data.instantiate()
-	sprite.position = spawn_point
-	add_child(sprite)
+func instruct_sprites(bg_frame: int, direction: Vector2):
+	background.frame = bg_frame
+	Globals.lane_direction = direction
+
+func spawn_sprite():
+	var new_sprite = Sprite.instantiate()
+	new_sprite.position = spawn_point
+	add_child(new_sprite)
+	var tween = create_tween()
+	tween.connect('finished', Callable(self, 'sprite_at_cpu').bind(new_sprite))
+	tween.tween_property(new_sprite, 'position', center_screen, 1).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
+	tween.play()
+
+func sprite_at_cpu(sprite: Node2D):
+	sprite.set('waiting_instruction', true)
+	if !initial_sprite_instructed:
+		initial_sprite_instructed = true
+		start_game()
+
+func start_game():
+	timer = Timer.new()
 	timer.set_wait_time(1)
+	timer.set_one_shot(false)
+	timer.connect('timeout', Callable(self, 'spawn_sprite'))
+	add_child(timer)
 	timer.start()
 
-func data_missed(body: Node2D):
-	var previous_velocity = Globals.current_velocity
-	# if previous_velocity != Globals.VELOCITIES.east:
-	# 	var tween := get_tree().create_tween()
-	# 	tween.tween_property(body, 'position', center_screen, tween_speed)
-	body.set('current_velocity', previous_velocity)
-	body.set('processed', true)
