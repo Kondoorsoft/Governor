@@ -68,16 +68,16 @@ var is_keyboard: bool = false
 var available_sprite_indexes: Array[int] = []
 var sprite_entrance_time := DEFAULT_ENTRANCE_TIME
 var sprite_respawn_time := DEFAULT_RESPAWN_TIME
-var timer: Timer
 var final_score := "0"
+var timer_name := "GlobalTimer"
+var timer_interval := 5.0
 
 func _ready() -> void:
-	timer = Timer.new()
-	timer.set_wait_time(5)
+	var timer := Timer.new()
+	timer.name = timer_name
 	timer.set_one_shot(false)
-	timer.connect('timeout', Callable(self, 'make_harder'))
+	timer.connect('timeout', Callable(self, 'increase_difficulty'))
 	add_child(timer)
-	timer.start()
 
 	var lanes = LANES.values()
 	for lane in lanes:
@@ -94,13 +94,19 @@ func get_lane(frame_index: int) -> Lane:
 			return lane
 	return null
 
-func make_harder():
+func increase_difficulty():
 	sprite_entrance_time *= 0.9
 	sprite_respawn_time *= 0.9
+
+func start_game():
+	var timer: Timer = get_node(timer_name)
+	timer.set_wait_time(timer_interval)
+	timer.start()
 
 func reset_game():
 	sprite_entrance_time = DEFAULT_ENTRANCE_TIME
 	sprite_respawn_time = DEFAULT_RESPAWN_TIME
 	final_score = "0"
 	lane_direction = DIRECTIONS.UNSET
-	remove_child(timer)
+	var timer: Timer = get_node(timer_name)
+	timer.stop()

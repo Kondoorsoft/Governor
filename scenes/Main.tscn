@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://7dul0mt7jcc2"]
+[gd_scene load_steps=12 format=3 uid="uid://7dul0mt7jcc2"]
 
 [ext_resource type="Script" path="res://scenes/Main.gd" id="1_b2ka4"]
 [ext_resource type="Texture2D" uid="uid://dejdxf84pxtx1" path="res://assets/images/BGSpriteSheet.png" id="2_bqarr"]
@@ -6,6 +6,8 @@
 [ext_resource type="AudioStream" uid="uid://cje5yaj4oyfvl" path="res://assets/sounds/Main.wav" id="4_yat6a"]
 [ext_resource type="AudioStream" uid="uid://bak3xpkjodsie" path="res://assets/sounds/Boom.wav" id="5_fl2f2"]
 [ext_resource type="FontFile" uid="uid://ce776xo4pqb10" path="res://assets/fonts/EGB.tres" id="6_5crto"]
+[ext_resource type="AudioStream" uid="uid://0008er5jhqt6" path="res://assets/sounds/good-feedback.wav" id="7_j6fsq"]
+[ext_resource type="AudioStream" uid="uid://duyw8cx4omk12" path="res://assets/sounds/bad-feedback.wav" id="8_4gxrm"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6dmvm"]
 bg_color = Color(0.611765, 0.611765, 0.611765, 1)
@@ -205,3 +207,11 @@ value = 20.0
 show_percentage = false
 
 [node name="SpawnTimer" type="Timer" parent="."]
+
+[node name="GoodFeedback" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_j6fsq")
+volume_db = -10.0
+
+[node name="BadFeedback" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_4gxrm")
+volume_db = -10.0

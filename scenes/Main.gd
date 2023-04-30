@@ -6,8 +6,11 @@ extends Node2D
 @onready var background: Sprite2D = $FullWindow/Background
 @onready var spawn_timer: Timer = $SpawnTimer
 @onready var help_popup: ColorRect = $FullWindow/ColorRect
+
 @onready var audio_stream_player_dead: AudioStreamPlayer = $AudioStreamPlayerDead
 @onready var audio_stream_player: AudioStreamPlayer = $AudioStreamPlayer
+@onready var good_feedback: AudioStreamPlayer = $GoodFeedback
+@onready var bad_feedback: AudioStreamPlayer = $BadFeedback
 
 @onready var ne_button:= $FullWindow/NEButton
 @onready var se_button:= $FullWindow/SEButton
@@ -18,7 +21,7 @@ extends Node2D
 @onready var s_button := $FullWindow/SButton
 @onready var e_button := $FullWindow/EButton
 
-@onready var memory = $Memory
+@onready var memory: ProgressBar = $Memory
 @onready var score = $Score
 
 var dead := false
@@ -90,8 +93,9 @@ func instruct_sprites(bg_frame: int, new_direction: Globals.DIRECTIONS):
 	Globals.lane_direction = new_direction
 	if !initial_sprite_instructed:
 		initial_sprite_instructed = true
-		start_game()
 		help_popup.visible = false
+		Globals.start_game()
+		start_game()
 
 func spawn_sprite():
 	var new_sprite = Sprite.instantiate()
@@ -123,6 +127,7 @@ func audio_stream_player_dead_finished() -> void:
 		get_tree().change_scene_to_packed(GameOver)
 
 func correct_lane():
+	good_feedback.play()
 	var score_value = int(score.text)
 	score_value += 10
 	score.text = str(score_value)
@@ -133,3 +138,5 @@ func incorrect_lane():
 		spawn_timer.stop()
 		dead = true
 		Globals.final_score = score.text
+	else:
+		bad_feedback.play()
