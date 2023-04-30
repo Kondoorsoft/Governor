@@ -39,20 +39,6 @@ hframes = 4
 vframes = 3
 frame = 1
 
-[node name="Center" type="Control" parent="FullWindow"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -22.5
-offset_right = 20.0
-offset_bottom = 22.5
-grow_horizontal = 2
-grow_vertical = 2
-
 [node name="NWButton" type="Sprite2D" parent="FullWindow"]
 position = Vector2(98, 8)
 texture = ExtResource("3_n1c26")
@@ -110,10 +96,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -70.0
-offset_top = 24.5
-offset_right = 68.0
-offset_bottom = 76.5
+offset_left = -87.5
+offset_top = 29.001
+offset_right = 87.5
+offset_bottom = 81.001
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
@@ -122,22 +108,23 @@ color = Color(0, 0, 0, 1)
 texture_filter = 1
 texture_repeat = 1
 layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
+anchors_preset = 8
+anchor_left = 0.5
 anchor_top = 0.5
-anchor_right = 1.0
+anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -138.0
-offset_top = -19.0
-offset_bottom = 20.0
-grow_horizontal = 0
+offset_left = -102.0
+offset_top = -19.5
+offset_right = 102.0
+offset_bottom = 19.5
+grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("6_5crto")
 theme_override_font_sizes/font_size = 8
-text = "PRESS THE KEY ON
-EACH LANE TO
- CHANGE THE ROUTE."
+text = "PRESS THE BUTTON SHOWN
+ON EACH LANE TO CHANGE
+THE ACTIVE ROUTE."
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -216,3 +203,5 @@ offset_bottom = 17.0
 theme = SubResource("Theme_l5kq3")
 value = 20.0
 show_percentage = false
+
+[node name="SpawnTimer" type="Timer" parent="."]

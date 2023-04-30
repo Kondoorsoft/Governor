@@ -1,6 +1,6 @@
 extends Control
 
-@onready var Scene = preload('res://scenes/Main.tscn')
+@onready var Main = preload('res://scenes/Main.tscn')
 
 @onready var ne_button:= $Label/NEButton
 @onready var se_button:= $Label/SEButton
@@ -11,7 +11,6 @@ extends Control
 @onready var s_button := $Label/SButton
 @onready var e_button := $Label/EButton
 
-
 var can_continue := false
 var timer: Timer
 
@@ -19,12 +18,11 @@ func _ready() -> void:
 	$AudioStreamPlayer.play()
 	
 	timer = Timer.new()
-	timer.set_wait_time(1)
+	timer.set_wait_time(0.5)
 	timer.set_one_shot(true)
 	timer.connect('timeout', func(): can_continue = true)
 	add_child(timer)
 	timer.start()
-	
 	
 	if Globals.is_keyboard == true:
 		ne_button.frame = 46
@@ -38,5 +36,5 @@ func _input(event):
 			Globals.is_keyboard = false
 		else:
 			Globals.is_keyboard = true
-		get_tree().change_scene_to_packed(Scene)
+		get_tree().change_scene_to_packed(Main)
 			

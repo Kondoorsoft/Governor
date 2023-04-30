@@ -22,10 +22,10 @@ func _process(delta: float) -> void:
 	if waiting_instruction && Globals.lane_direction != Globals.DIRECTIONS.UNSET:
 		var current_lane: Lane = Globals.LANES[Globals.lane_direction]
 		current_velocity = current_lane.sprite_velocity
-		if expected_lane != current_lane.lane_direction:
-			print("Wrong Lane!")
+		if expected_lane == current_lane.lane_direction:
+			SignalBus.correct_lane.emit()
 		else:
-			print("Correct Lane!")
+			SignalBus.incorrect_lane.emit()
 		waiting_instruction = false
 	
 	move_and_collide(Vector2(current_velocity.x * delta, current_velocity.y * delta))
