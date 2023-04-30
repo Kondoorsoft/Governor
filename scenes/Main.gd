@@ -17,6 +17,7 @@ var spawn_point: Vector2
 var center_screen: Vector2
 var tween_speed := 0.5
 var current_sprite: CharacterBody2D = null
+var initial_sprite_at_cpu := false
 var initial_sprite_instructed := false
 
 func _ready():
@@ -36,7 +37,7 @@ func _ready():
 
 func _process(_delta):
 
-	if initial_sprite_instructed:
+	if initial_sprite_at_cpu:
 		if Input.is_action_just_pressed('northwest'):
 			instruct_sprites(4, Globals.DIRECTIONS.northwest)
 		elif Input.is_action_just_pressed('north'):
@@ -55,6 +56,9 @@ func _process(_delta):
 func instruct_sprites(bg_frame: int, direction: Vector2):
 	background.frame = bg_frame
 	Globals.lane_direction = direction
+	if !initial_sprite_instructed:
+		initial_sprite_instructed = true
+		start_game()
 
 func spawn_sprite():
 	var new_sprite = Sprite.instantiate()
@@ -67,9 +71,8 @@ func spawn_sprite():
 
 func sprite_at_cpu(sprite: Node2D):
 	sprite.set('waiting_instruction', true)
-	if !initial_sprite_instructed:
-		initial_sprite_instructed = true
-		start_game()
+	if !initial_sprite_at_cpu:
+		initial_sprite_at_cpu = true
 
 func start_game():
 	timer = Timer.new()
