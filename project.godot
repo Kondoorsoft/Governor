@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="Governor"
+config/name="Data Duty"
 run/main_scene="res://scenes/TitleScreen.tscn"
 config/features=PackedStringArray("4.0", "GL Compatibility")
 run/max_fps=160
@@ -108,3 +108,4 @@ quit={
 textures/canvas_textures/default_texture_filter=3
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+textures/vram_compression/import_s3tc_bptc=true
